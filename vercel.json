@@ -11,17 +11,10 @@
       },
       {
         "src": "build_files.sh",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "staticfiles"
-        }
+        "use": "@vercel/static-build"
       }
     ],
     "routes": [
-      {
-        "src": "/static/(.*)",
-        "dest": "/static/$1"
-      },
       {
         "src": "/(.*)",
         "dest": "bg_remove/wsgi.py"
