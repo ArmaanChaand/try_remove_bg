@@ -2,13 +2,26 @@
     "builds": [
       {
         "src": "bg_remove/wsgi.py",
-        "use": "@vercel/python"
+        "use": "@vercel/python",
+        "config": {
+          "maxLambdaSize": "255mb",
+          "runtime": "python3.9"
+
+        }
       },
       {
-        "src": "build_files.sh"
+        "src": "build_files.sh",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "staticfiles"
+        }
       }
     ],
     "routes": [
+      {
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+      },
       {
         "src": "/(.*)",
         "dest": "bg_remove/wsgi.py"
