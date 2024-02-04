@@ -1,130 +1,419 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remove Background</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* Reset CSS */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        /* Typography */
-        body {
-            font-family: 'Roboto', sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
-            color: #333;
-            background-color: #f8f9fa;
-        }
-        
-        /* Layout */
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Header */
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #2980b9;
-        }
-        
-        /* Form */
-        form {
-            text-align: center;
-        }
-        
-        input[type="file"] {
-            display: none;
-        }
-        
-        .upload-btn {
-            display: inline-block;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            background-color: #2980b9;
-            color: #fff;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        .upload-btn:hover {
-            background-color: #1a618e;
-        }
-        
-        /* Uploaded Image */
-        .uploaded-image,
-        .no-image-text{
-            margin: 20px auto;
-            width: 300px;
-            height: 200px;
-            border: 2px solid #22222247;
-            border-radius: 16px;
-        }
-        .uploaded-image {
-            display: none;
-            object-fit: contain;
-        }
-        .no-image-text{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        /* Footer */
-        p {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                max-width: 90%;
-            }
-        }
-    </style>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block 'headtags' %}
+{% include 'headtags.html' %}
+{% endblock 'headtags' %}
+{% block 'main' %}
+      <section
+        class="h-fit gap-10 2xl:gap-16 w-full flex flex-col md900:flex-row justify-between items-center pt-28 pb-12 md900:mt-0">
+        <div class="w-full md900:w-1/2 flex-1 shrink-0 h-fit flex flex-col justify-center items-start gap-5 2xl:gap-10 
+      ">
+          <h1 class="heading-xl text-start">
+            {{ home.hero_heading|default:"WebP Background Remover Tool for Free"|safe }}
+          </h1>
+          <p class="2xl:text-xl text-justify">
+            {{home.hero_para|default:"In the digital world, there's a free tool called WebP Background Remover.Com that helps you to remove backgrounds from WebP images instantly. It's like magic for your photos, and we'll show you how to use it!"|safe}}
+          </p>
+          <div>
+            <button class="btn primary"
+              onclick="document.getElementById('ACTION_CENTER').scrollIntoView({ behavior: 'smooth', block: 'start'})">
+              Get Started
+            </button>
+          </div>
+        </div>
+        <div
+          class="w-[90vw] sm550:w-[500px] h-[300px] 2xl:w-[30vw] 2xl:h-[500px]  mx-auto overflow-hidden rounded-3xl shrink-0 mb-auto bg-zinc-300 bg-center bg-cover mt-16 md900:mt-0 relative"
+          style="background-image:url({% static 'png_bg.jpg' %});"
+          >
+          <img src="{% static 'hero_img_nobg.png' %}" alt="webp background remover" class="object-cover w-full h-full" />
+          <div class="absolute inset-0 w-1/2 h-full z-10 resize-x
+        border-r-2 border-r-black">
+            <button
+              class="absolute -right-4 top-1/2 -translate-y-1/2 text-xl z-20 bg-white rounded-full flex justify-center items-center w-9 p-1 aspect-square cursor-grab hover:scale-110 transition-all"
+              draggable="true" id="IMAGE_SLIDER">
+              <svg stroke="currentColor" fill="currentColor" stroke-width="0" class="w-full h-full"
+                viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M216,104v48a88,88,0,0,1-176,0V136a16,16,0,0,1,32,0v8a8,8,0,0,0,16,0V88a16,16,0,0,1,32,0v16a8,8,0,0,0,16,0V88a16,16,0,0,1,32,0v16a8,8,0,0,0,16,0,16,16,0,0,1,32,0Z">
+                </path>
+              </svg>
+            </button>
+            <div class="w-full h-full overflow-hidden">
+              <img src="{% static 'hero_img.jpg' %}" alt="WebPBackgroundRemover" class="object-cover  w-[90vw] sm550:w-[500px] h-[300px] 
+                2xl:w-[30vw] 2xl:h-[500px] max-w-[90vw] sm550:max-w-[500px] 2xl:max-w-[30vw]" />
 
-    <div class="container">
-        <h1>Upload Image and Remove Background</h1>
-        <img src="" alt="Uploaded Image" class="uploaded-image">
-        <p class="no-image-text">No image selected</p>
-        <form method="POST" enctype="multipart/form-data" id="upload-form">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {{home.home_ad_1|safe}}
+
+      <section class="h-fit w-full flex flex-col justify-center items-center mt-12 gap-5" id="ACTION_CENTER">
+        <div class="h-fit w-full flex flex-col justify-center items-center bg-primary gap-10 py-10 px-5 rounded-3xl ">
+          <form class="image_select" enctype="multipart/form-data" id="IMAGE_FORM">
             {% csrf_token %}
-            <label for="input_image" class="upload-btn">Choose Image</label>
-            <input type="file" id="input_image" name="input_image" accept="image/*" required/>
-            <button type="submit" class="upload-btn">Remove Background</button>
-        </form>
+            <h2 class="heading-xl ">
+              Choose or drag a webp image
+            </h2>
+            <input class="btn absolute inset-0 w-full h-full opacity-0 cursor-pointer" type="file" accept="image/webp"
+              data-image-input="INPUT_IMAGE" value="Choose image" id="INPUT_IMAGE">
+            <button class="btn secondary" type="button">
+              Choose image
+            </button>
+            <p>
+              One image at a time. Max 10MB each.
+            </p>
+            <p class="error_msg" id="ERROR_MSG">
+              File you selected wasn't a webp image.
+            </p>
+          </form>
+          <img src="/hero_img.jpg" class="w-fit h-fit hidden" id="PROCESSED_IMG" />
+          <div class="preview_section loading" id="PREVIEW_SECTION">
+            <div class="img_box">
+              <img src="" class="uploaded_img" id="UPLOADED_IMG" />
+            </div>
+            <div class="action_texts">
+              <h3 class="text-xl font-bold">
+                Hang on! This may take moment or two.
+                <br/>
+                Your patience is appreciated.
+              </h3>
+              <button class="btn secondary " id="DOWNLOAD_IMG_BTN">
+                <svg stroke="currentColor" class="spinner" fill="none" stroke-width="0" viewBox="0 0 24 24" height="1em"
+                  width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path opacity="0.2" fill-rule="evenodd" clip-rule="evenodd"
+                    d="M12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                    fill="currentColor"></path>
+                  <path d="M12 22C17.5228 22 22 17.5228 22 12H19C19 15.866 15.866 19 12 19V22Z" fill="currentColor">
+                  </path>
+                  <path d="M2 12C2 6.47715 6.47715 2 12 2V5C8.13401 5 5 8.13401 5 12H2Z" fill="currentColor"></path>
+                </svg>
+                <svg stroke="currentColor" class="download" fill="currentColor" stroke-width="0" viewBox="0 0 512 512"
+                  height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z">
+                  </path>
+                </svg>
+                <span>
+                  Download image
+                </span>
+              </button>
+              <button class="btn outlined relative" id="UPLOAD_ANOTHER_BTN">
+                <input class="absolute inset-0 opacity-0 cursor-pointer" type="file" accept="image/webp"
+                  value="Upload another" data-image-input="INPUT_IMAGE" />
+                Upload another
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <p>Please note: Larger file sizes may take longer to process.</p>
-    </div>
+      {{home.home_ad_2|safe}}
+      <!-- What is section -->
+      <section class="max-w-xl md:mx-auto sm:text-center lg:max-w-2xl mt-20">
+        <h2 class="heading-xl">
+          {{ home.what_heading|default:"What is WebP Background Remover Tool?"|safe }}
+        </h2>
+        <p class="mt-10">
+          {{ home.what_para|default:"This Webp Background Remover tool is like a superhero for pictures. It removes the background from WebP images so you can focus on what's important. Whether you're just starting or already good at this stuff, it's easy to use and makes your pictures look awesome."|safe }}
+        </p>
 
-    <script>
-        document.getElementById("input_image").addEventListener("change", function() {
-            var file = this.files[0];
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                document.querySelector('.uploaded-image').src = e.target.result;
-                document.querySelector('.uploaded-image').style.display = 'block';
-                document.querySelector('.no-image-text').style.display = 'none';
-            }
-            reader.readAsDataURL(file);
-        });
-    </script>
+      </section>
 
-</body>
-</html>
+      {{home.home_ad_3|safe}}
+      <!-- How to use section. -->
+      <section class="mt-10 py-16 mx-auto lg:py-20" id="HOW_TO_USE_SECTION">
+        <div class="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
+          <h2
+            class="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-primary-text sm:text-4xl md:mx-auto">
+            <span class="relative inline-block">
+              <svg viewBox="0 0 52 24" fill="currentColor"
+                class="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block">
+                <defs>
+                  <pattern id="d0d83814-78b6-480f-9a5f-7f637616b267" x="0" y="0" width=".135" height=".30">
+                    <circle cx="1" cy="1" r=".7"></circle>
+                  </pattern>
+                </defs>
+                <rect fill="url(#d0d83814-78b6-480f-9a5f-7f637616b267)" width="52" height="24"></rect>
+              </svg>
+              <span class="relative"></span>
+            </span>
+            <span class="-ml-1.5">
+              {{ home.how_heading|default:"How to Use WebP Background Remover Tool?"|safe }}
+            </span>
+          </h2>
+          <p class="text-base text-primary-text md:text-lg">
+            {{ home.how_para|default:"Using it is super easy. Just put your picture in, and the tool does the hard work. It's like having a friend who's really good at art helping you out. You can change a few things to make it look just the way you want. Easy peasy!"|safe }}
+          </p>
+        </div>
+        <div class="mx-auto grid gap-8 row-gap-5 mb-8 md:row-gap-8 lg:grid-cols-4 sm:grid-cols-2">
+          <!-- How Steps -->
+          {% if home.how_step_1 %}
+          <div class="step-box">
+            <div class="step-box--header">
+              <h4 class="step-heading">
+                {{ home.how_step_1|safe }}
+              </h4>
+              <p class="step-num">
+                1
+              </p>
+            </div>
+            <p class="step-body">
+              {{ home.how_step_1_body|safe }}
+            </p>
+          </div>
+          {% endif  %}
+          {% if home.how_step_2 %}
+          <div class="step-box">
+            <div class="step-box--header">
+              <h4 class="step-heading">
+                {{ home.how_step_2|safe }}
+              </h4>
+              <p class="step-num">
+                2
+              </p>
+            </div>
+            <p class="step-body">
+              {{ home.how_step_2_body|safe }}
+            </p>
+          </div>
+          {% endif  %}
+          {% if home.how_step_3 %}
+          <div class="step-box">
+            <div class="step-box--header">
+              <h4 class="step-heading">
+                {{ home.how_step_3|safe }}
+              </h4>
+              <p class="step-num">
+                3
+              </p>
+            </div>
+            <p class="step-body">
+              {{ home.how_step_3_body|safe }}
+            </p>
+          </div>
+          {% endif  %}
+          {% if home.how_step_4 %}
+          <div class="step-box">
+            <div class="step-box--header">
+              <h4 class="step-heading">
+                {{ home.how_step_4|safe }}
+              </h4>
+              <p class="step-num">
+                4
+              </p>
+            </div>
+            <p class="step-body">
+              {{ home.how_step_4_body|safe }}
+            </p>
+          </div>
+          {% endif  %}
+          {% if home.how_step_5 %}
+          <div class="step-box">
+            <div class="step-box--header">
+              <h4 class="step-heading">
+                {{ home.how_step_5|safe }}
+              </h4>
+              <p class="step-num">
+                5
+              </p>
+            </div>
+            <p class="step-body">
+              {{ home.how_step_5_body|safe }}
+            </p>
+          </div>
+          {% endif  %}
+          {% if home.how_step_6 %}
+          <div class="step-box">
+            <div class="step-box--header">
+              <h4 class="step-heading">
+                {{ home.how_step_6|safe }}
+              </h4>
+              <p class="step-num">
+                6
+              </p>
+            </div>
+            <p class="step-body">
+              {{ home.how_step_6_body|safe }}
+            </p>
+          </div>
+          {% endif  %}
+          {% if home.how_step_7 %}
+          <div class="step-box">
+            <div class="step-box--header">
+              <h4 class="step-heading">
+                {{ home.how_step_7|safe }}
+              </h4>
+              <p class="step-num">
+                7
+              </p>
+            </div>
+            <p class="step-body">
+              {{ home.how_step_7_body|safe }}
+            </p>
+          </div>
+          {% endif  %}
+        </div>
+        <p class="text-xs text-primary-text md:text-sm mx-auto max-w-xl lg:max-w-2xl text-center my-12">
+          {{home.how_to_closure|default:"And that's it! You've successfully used the WebP Background Remover tool to remove the background from your WebP image. Experiment with different images and settings to get the best results for your creative projects."|safe}}
+        </p>
+        <div class="text-center">
+          <button class="btn primary cursor-pointer relative" id="UPLOAD_ANOTHER_BTN_2"
+            onclick="document.getElementById('ACTION_CENTER').scrollIntoView({ behavior: 'smooth', block: 'start'})">
+            <input class="absolute inset-0 opacity-0 cursor-pointer" type="file" accept="image/webp"
+              value="Upload another" data-image-input="INPUT_IMAGE" />
+            Upload image
+          </button>
+        </div>
+      </section>
+
+      {{home.home_ad_4|safe}}
+
+      <section class="bg-primary rounded-3xl">
+        <div class="container p-10 mx-auto">
+          <h1 class="text-2xl font-semibold text-primary-text capitalize lg:text">
+            {{home.benefits_heading|default:"Benefits of Using our WebP Background Remover Tool"|safe}}
+          </h1>
+          <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-3">
+            {% if home.benefits_1 %}
+            <div class="special-box">
+              <span>
+                {{home.benefits_1_svg|safe}}
+              </span>
+              <h3 class="special-box--heading"> {{home.benefits_1|safe}}</h3>
+              <p>
+                {{home.benefits_1_body|safe}}
+              </p>
+            </div>
+            {% endif %}
+            {% if home.benefits_2 %}
+            <div class="special-box">
+              <span>
+                {{home.benefits_2_svg|safe}}
+              </span>
+              <h3 class="special-box--heading"> {{home.benefits_2|safe}}</h3>
+              <p>
+                {{home.benefits_2_body|safe}}
+              </p>
+            </div>
+            {% endif %}
+            {% if home.benefits_3 %}
+            <div class="special-box">
+              <span>
+                {{home.benefits_3_svg|safe}}
+              </span>
+              <h3 class="special-box--heading"> {{home.benefits_3|safe}}</h3>
+              <p>
+                {{home.benefits_3_body|safe}}
+              </p>
+            </div>
+            {% endif %}
+            {% if home.benefits_4 %}
+            <div class="special-box">
+              <span>
+                {{home.benefits_4_svg|safe}}
+              </span>
+              <h3 class="special-box--heading"> {{home.benefits_4|safe}}</h3>
+              <p>
+                {{home.benefits_4_body|safe}}
+              </p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </section>
+      {{home.home_ad_5|safe}}
+
+      <section class="mt-12 py-16 mx-auto lg:py-20">
+        <div class="flex flex-col lg:flex-row">
+          <div class="lg:max-w-2xl pr-16 mx-auto mb-10">
+            <h5 class="mb-6 text-3xl font-extrabold leading-none">
+              {{home.special_heading|default:"What Makes our WebP Background Remover Tool Special?"|safe}}
+            </h5>
+            {% if home.special_para %}
+            {{home.special_para|safe}}
+            {% else %}
+            <p class="mb-3">
+              This WebP Background Remover tool is like no other.
+            </p>
+            <p class="mb-6 ">
+              In short, WebPBackgroundRemover.Com is a great tool for removing backgrounds of WebP images and making
+              pictures look amazing. It's easy, fast, and keeps your pictures top-notch. Give it a try and make your
+              photos stand out!
+            </p>
+            {% endif %}
+            <div class="flex items-center gap-3">
+              <button class="btn primary"
+                onclick="document.getElementById('ACTION_CENTER').scrollIntoView({ behavior: 'smooth', block: 'start'})">
+                Get Started
+              </button>
+              <button class="font-semibold text-primary-text"
+                onclick="document.getElementById('HOW_TO_USE_SECTION').scrollIntoView({ behavior: 'smooth', block: 'start'})">
+                How to use?
+              </button>
+            </div>
+          </div>
+          <div class="grid gap-5 row-gap-5 sm:grid-cols-2">
+            {% if home.special_point_1 %}
+            <div class="benefit-box">
+              <div class="benefit-box--illustration">
+                <svg stroke="currentColor" viewBox="0 0 52 52">
+                  <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+                </svg>
+              </div>
+              <h6 class="benefit-box--heading">{{home.special_point_1|safe}}</h6>
+              <p class="benefit-box--body">
+                {{home.special_point_1_body|safe}}
+              </p>
+            </div>
+            {% endif %}
+            {% if home.special_point_2 %}
+            <div class="benefit-box">
+              <div class="benefit-box--illustration">
+                <svg stroke="currentColor" viewBox="0 0 52 52">
+                  <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+                </svg>
+              </div>
+              <h6 class="benefit-box--heading">{{home.special_point_2|safe}}</h6>
+              <p class="benefit-box--body">
+                {{home.special_point_2_body|safe}}
+              </p>
+            </div>
+            {% endif %}
+            {% if home.special_point_3 %}
+            <div class="benefit-box">
+              <div class="benefit-box--illustration">
+                <svg stroke="currentColor" viewBox="0 0 52 52">
+                  <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+                </svg>
+              </div>
+              <h6 class="benefit-box--heading">{{home.special_point_3|safe}}</h6>
+              <p class="benefit-box--body">
+                {{home.special_point_3_body|safe}}
+              </p>
+            </div>
+            {% endif %}
+            {% if home.special_point_4 %}
+            <div class="benefit-box">
+              <div class="benefit-box--illustration">
+                <svg stroke="currentColor" viewBox="0 0 52 52">
+                  <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+                </svg>
+              </div>
+              <h6 class="benefit-box--heading">{{home.special_point_4|safe}}</h6>
+              <p class="benefit-box--body">
+                {{home.special_point_4_body|safe}}
+              </p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </section>
+      {{home.home_ad_6|safe}}
+      
+{% endblock 'main' %}

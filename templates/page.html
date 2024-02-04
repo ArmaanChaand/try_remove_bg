@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'headtags' %}
+{% include 'headtags.html' %}
+{% endblock 'headtags' %}
+{% block 'main' %}
+
+{{home.html_content|safe}}
+    
+{% endblock 'main' %}
