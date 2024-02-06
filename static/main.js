@@ -3,6 +3,8 @@
 const UPLOADED_IMG = document.getElementById('UPLOADED_IMG')
 const PREVIEW_SECTION = document.getElementById('PREVIEW_SECTION')
 const PROCESSED_IMG = document.getElementById('PROCESSED_IMG')
+const dropArea = document.getElementById("IMAGE_FORM");
+const errorMessage = document.getElementById("ERROR_MSG");
 
 
 function removeFetch(file) {
@@ -16,11 +18,13 @@ function removeFetch(file) {
     formData.append('input_image', file);
     formData.append('csrfmiddlewaretoken', csrfmiddlewaretoken);
     PREVIEW_SECTION.classList.add('loading')
+    dropArea.classList.remove('error')
     fetch('/remove/', {
         method: 'POST',
         body: formData
     })
         .then(response => {
+            console.log(response)
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -34,14 +38,15 @@ function removeFetch(file) {
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
+            errorMessage.innerHTML = "It's not you. It's us. <br/> Sorry for the inconvenience."
+            dropArea.classList.add('error')
+            
         }).finally(() => {
             PREVIEW_SECTION.classList.remove('loading')
         })
 }
 
-const dropArea = document.getElementById("IMAGE_FORM");
 const inputImage = document.getElementById("INPUT_IMAGE");
-const errorMessage = document.getElementById("ERROR_MSG");
 
 // Prevent default drag behaviors
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {

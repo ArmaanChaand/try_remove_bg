@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from rembg import remove
 from .models import HomePage, AboutPage, ContactPage, PrivacyPolicyPage, TermsAndConditionsPage, Socials
-import base64
-
+from utils.remove_bg import _remove
 def query_headtags(headtag_i):
     return {
                 "title": headtag_i.title,
@@ -22,12 +20,11 @@ def render_page(request, PageModel, template_name):
     }
 
     page_instance = PageModel.objects.filter(is_active=True).first()
-    if page_instance and page_instance.headtags: 
-        headtags = query_headtags(headtag_i=page_instance.headtags)
-        
-        context['headtags'] = headtags
+    if page_instance: 
         context['home'] = page_instance
-
+        if page_instance.headtags:
+            headtags = query_headtags(headtag_i=page_instance.headtags)
+            context['headtags'] = headtags
     return render(request, template_name, context)
 
 
@@ -47,19 +44,17 @@ def termsandconditions(request):
 
 def remover(request):
     if request.method == 'POST' and request.FILES.get('input_image'):
-        print(request.FILES)
         uploaded_file = request.FILES['input_image']
-        file_content = uploaded_file.read()
-        try:
-                processed_image_content = remove(file_content, alpha_matting=True)
-                file_content_base64 = base64.b64encode(processed_image_content).decode('utf-8')
+        try:                
+                file_content = _remove(uploaded_file)
                 response_data = {
                     'file_name': uploaded_file.name,
                     'file_size': uploaded_file.size,
-                    'file_content': file_content_base64 # Read the file content
+                    'file_content': file_content # Read the file content
                 }
                 return JsonResponse(response_data)
         except Exception as e:
+            print(e)
             return JsonResponse({'error': "It's not you it's us."}, status=400)
     return JsonResponse({'error': 'Please upload a file using a POST request.'}, status=400)
 

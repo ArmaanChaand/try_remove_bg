@@ -107,10 +107,10 @@
             <span class="text-sm text-black sm:text-center ">© 2023 <a href="/" class="hover:underline">WebP Background Remover</a>.
               All Rights Reserved.
             </span>
-            <div class="flex mt-4 sm:justify-center sm:mt-0">
+            <div class="flex mt-4 sm:justify-center sm:mt-0 ">
               {% for social in socials %}
-              <a href="{social.social_link}" title="{{social.social_name}}" class="text-black hover:text-black ">
-                {social.social_svg|safe}
+              <a href="{{social.social_link}}" title="{{social.social_name}}" class="text-black hover:text-black ms-5">
+                {{social.social_svg|safe}}
                 <span class="sr-only">{{social.social_name}}</span>
               </a>
               {% endfor %}
